@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "users.apps.UsersConfig"
+    "users.apps.UsersConfig",
+    "teams.apps.TeamsConfig",
 ]
 
 MIDDLEWARE = [

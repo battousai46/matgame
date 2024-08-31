@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
+
 class User(AbstractUser):
     pkid = models.BigAutoField(primary_key=True, editable=False)
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -48,12 +49,12 @@ class PlayerDetails(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     total_participation = models.IntegerField(default=0)
     total_wins = models.IntegerField(default=0)
+    team = models.ForeignKey("teams.Team", on_delete=models.CASCADE, related_name="players", blank=True, null=True)
 
 
 class Player(User):
     base_type = User.Types.PLAYER
     objects = PlayerManager()
-
     @property
     def details(self):
         return self.playerdetails
