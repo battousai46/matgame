@@ -1,0 +1,47 @@
+version: '3.11'
+
+services:
+  web:
+    container_name: django_matgame
+    command: "web-local"
+    build:
+      context: ../
+      dockerfile: Dockerfile
+      target: poc
+      args:
+        - GITHUB_TOKEN
+    ports:
+      - 8000:8000
+    environment:
+      - DJANGO_DEBUG=0 # to enable debug and postgres together, feel free to manipulate settings.py
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PASSWORD=testme
+      - DJANGO_DB_NAME=matgame
+      - DJANGO_DB_USER=postgres
+    env_file:
+      - ./local.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    container_name: postgres_matgame
+    image: postgres:14.7
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=matgame
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=testme
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  postgres_data:
