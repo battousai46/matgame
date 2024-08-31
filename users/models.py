@@ -49,7 +49,10 @@ class PlayerDetails(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     total_participation = models.IntegerField(default=0)
     total_wins = models.IntegerField(default=0)
+    # TODO active players of a team limit is 5
     team = models.ForeignKey("teams.Team", on_delete=models.CASCADE, related_name="players", blank=True, null=True)
+    def __str__(self):
+        return self.user.username
 
 
 class Player(User):

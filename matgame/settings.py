@@ -37,9 +37,6 @@ else:
     ALLOWED_HOSTS = ["*"]
 
 
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -58,6 +55,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "users.apps.UsersConfig",
     "teams.apps.TeamsConfig",
+    "games.apps.GamesConfig",
+    "leagues.apps.LeaguesConfig",
 ]
 
 MIDDLEWARE = [
