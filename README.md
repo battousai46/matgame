@@ -42,6 +42,11 @@ Implementation of Front End, preferrably NextJS in React or any convenience.
 
 #### build virtualenv, run app and rds in docker, run migration, initate management script
 
+```bash
+setup test environment config
+
+DJANGO_SETTINGS_MODULE=matgame.settings;DJANGO_DEBUG=TRUE
+```
 
 ```bash
 poetry install
