@@ -23,8 +23,8 @@ class Command(BaseCommand):
         else:
             team = team.first()
 
-        PlayerDetails.objects.get_or_create(user=p1[0], total_participation=2, total_wins=1, team=team);
-        PlayerDetails.objects.get_or_create(user=p2[0], total_participation=2, total_wins=1, team=team);
+        PlayerDetails.objects.get_or_create(user=p1[0], individual_participation=2, individual_wins=1, team=team);
+        PlayerDetails.objects.get_or_create(user=p2[0], individual_participation=2, individual_wins=1, team=team);
 
         all_players = team.players.all()
         print(all_players)
