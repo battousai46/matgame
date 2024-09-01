@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import  permissions
 from rest_framework import viewsets
 
@@ -5,6 +6,7 @@ from rest_framework import viewsets
 from leagues.models import League, Round
 from leagues.serializers import LeagueSerializer, RoundSerializer
 
+User = get_user_model()
 
 # Create your views here.
 
@@ -13,6 +15,7 @@ class LeagueViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.AllowAny]
     filterset_fields = ['title']
     def get_queryset(self):
+
         return League.objects.all()
 
 
@@ -24,5 +27,4 @@ class RoundViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['league__title']
     def get_queryset(self):
         return Round.objects.all()
-
 

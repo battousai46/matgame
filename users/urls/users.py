@@ -2,15 +2,13 @@ from django.urls import path
 
 app_name = "users"
 
-from users.views import (
-    user_redirect_view,
-    user_update_view,
-    user_detail_view,
-)
+from users.views import MatGameTokenObtainPairView
+
 
 
 urlpatterns = [
-    path("~redirect/", view=user_redirect_view, name="redirect"),
-    path("~update/", view=user_update_view, name="update"),
-    path("<str:username>/", view=user_detail_view, name="detail"),
+    path('token/', view=MatGameTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path("login/", MatGameTokenObtainPairView.as_view()),
+    path("refresh/", MatGameTokenObtainPairView.as_view()),
+    path("logout/", MatGameTokenObtainPairView.as_view()),
 ]

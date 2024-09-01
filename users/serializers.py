@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from teams.serializers import TeamsSerializer
 from users.models import Coach, Player, PlayerDetails
@@ -62,3 +64,26 @@ class PlayerDetailsSerializer(serializers.ModelSerializer):
         if obj.team:
             return TeamsSerializer(obj.team).data
         return None
+
+
+class MatGameTokenObtainSerializer(TokenObtainSerializer):
+    token_class = RefreshToken
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['user_type'] = user.type
+        token['user_username'] = user.username
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        refresh = self.get_token(self.user)
+
+        refresh["user_type"] = self.user.type  # here you can add custom cliam
+        refresh['user_username'] = self.user.username
+
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+
+        return data

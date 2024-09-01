@@ -52,11 +52,11 @@ INSTALLED_APPS = [
     "django_filters",
     "allauth",
     "allauth.account",
-    "allauth.socialaccount",
     "users.apps.UsersConfig",
     "teams.apps.TeamsConfig",
     "games.apps.GamesConfig",
     "leagues.apps.LeaguesConfig",
+    "common.apps.CommonConfig",
 ]
 
 MIDDLEWARE = [
@@ -163,6 +163,7 @@ REST_FRAMEWORK = {
     # drf-spectacular
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    # IF throttling needed
     # "DEFAULT_THROTTLE_CLASSES": (
     #     "rest_framework.throttling.AnonRateThrottle",
     #     "rest_framework.throttling.UserRateThrottle",
@@ -181,19 +182,8 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
+    "TOKEN_OBTAIN_SERIALIZER": "user.serializers.MatGameTokenObtainSerializer",
 }
 
 AUTH_USER_MODEL = "users.User"
 
-# Authentication is not required in this POC, shoot at  geass.of.code@gmail.com for later releases
-ACCOUNT_FORMS = {
-    "login": "allauth.account.forms.LoginForm",
-    "add_email": "allauth.account.forms.AddEmailForm",
-    "change_password": "allauth.account.forms.ChangePasswordForm",
-    "set_password": "allauth.account.forms.SetPasswordForm",
-    "reset_password": "allauth.account.forms.ResetPasswordForm",
-    "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
-    #"disconnect": "allauth.socialaccount.forms.DisconnectForm",
-    # Use our custom signup form
-    "signup": "users.forms.MatGameSignupForm",
-}
