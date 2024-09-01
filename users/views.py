@@ -6,8 +6,26 @@ from django.views.generic import (
     RedirectView,
     UpdateView,
 )
+from rest_framework import  permissions, viewsets
+from users.models import Coach, PlayerDetails
+from users.serializers import CoachSerializer, PlayerDetailsSerializer
 
 User = get_user_model()
+
+
+class CoachViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = CoachSerializer
+    permission_classes = [permissions.AllowAny]
+    filterset_fields = ['username']
+    def get_queryset(self):
+        return Coach.objects.all()
+
+class PlayerDetailsViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = PlayerDetailsSerializer
+    permission_classes = [permissions.AllowAny]
+    filterset_fields = ['user__username']
+    def get_queryset(self):
+        return PlayerDetails.objects.all()
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):

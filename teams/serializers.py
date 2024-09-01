@@ -3,7 +3,7 @@ from rest_framework import serializers
 from teams.models import Team
 
 
-class TeamsSerializer(serializers.ModelSerializer):
+class TeamsSerializer(serializers.HyperlinkedModelSerializer):
     name = serializers.PrimaryKeyRelatedField(read_only=True)
     coach = serializers.SerializerMethodField()
     total_participation = serializers.IntegerField(read_only=True)
@@ -19,7 +19,7 @@ class TeamsSerializer(serializers.ModelSerializer):
             "total_wins"
         ]
 
-    def get_coach(self, obj):
+    def get_coach(self, obj)->str|None:
         if obj.coach:
             return obj.coach.username
         return None

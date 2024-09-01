@@ -25,7 +25,7 @@ urlpatterns = [
     # User management
     path(
         "users/",
-        include("users.urls", namespace="users"),
+        include("users.urls.users", namespace="users"),
     ),
 
     # TODO to integrate social auth

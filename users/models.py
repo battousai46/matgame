@@ -9,6 +9,8 @@ from django.utils.translation import gettext_lazy as _
 class User(AbstractUser):
     pkid = models.BigAutoField(primary_key=True, editable=False)
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    name = models.CharField(_("Name of User"), blank=True, max_length=255)
+
     class Types(models.TextChoices):
         PLAYER = "PLAYER", "Player"
         COACH = "COACH", "Coach"
@@ -19,8 +21,6 @@ class User(AbstractUser):
     type = models.CharField(
         _("Type"), max_length=50, choices=Types.choices, default=base_type
     )
-
-    name = models.CharField(_("Name of User"), blank=True, max_length=255)
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})

@@ -57,13 +57,12 @@ class Command(BaseCommand):
         self.generate_logN_rounds(next_teams, league, round_no+1)
 
     def generate_team_assign_coach(self, league_title: str):
-        # TODO assign coach to fetch team and player details, add tests
         # create 2^N teams / for test purpose create 8 teams
         print(f"generating teams for {league_title}")
         league = League(title=league_title)
         league.save()
         teams = []
-        Command.total_teams = int(pow(2, log2( 8 )))
+        Command.total_teams = int(pow(2, log2( 16 )))
         for ith in range(Command.total_teams):
             team_name = "go8_team_" + str(ith + 1)
             coach = Coach.objects.get_or_create(username="coach" + str(ith), email="t" + str(ith) + "@c.com",
@@ -95,6 +94,7 @@ class Command(BaseCommand):
         User.objects.all().delete()
         Team.objects.all().delete()
         Game.objects.all().delete()
+        Player.objects.all().delete()
         Round.objects.all().delete()
         League.objects.all().delete()
         PlayerDetails.objects.all().delete()
@@ -107,7 +107,7 @@ class Command(BaseCommand):
         #clean if needed
         self.clear_all_db()
 
-        league_title = "GameOfEightPowerOfTwo"
+        league_title = "GameOf16PowerOf2"
 
         self.generate_team_assign_coach(league_title)
 
