@@ -64,7 +64,7 @@ class Command(BaseCommand):
         teams = []
         Command.total_teams = int(pow(2, log2( 16 )))
         for ith in range(Command.total_teams):
-            team_name = "go8_team_" + str(ith + 1)
+            team_name = "sys_team_" + str(ith + 1)
             coach = Coach.objects.get_or_create(username="coach" + str(ith), email="t" + str(ith) + "@c.com",
                                                 type=User.Types.COACH)
             team = Team.objects.filter(name__iexact=team_name)
@@ -110,7 +110,7 @@ class Command(BaseCommand):
         league_title = "GameOf16PowerOf2"
 
         self.generate_team_assign_coach(league_title)
-
+        #
         self.print_league_summary(league_title)
 
         self.stdout.write(self.style.SUCCESS("irfan, nabil players are initiated"))

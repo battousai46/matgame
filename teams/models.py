@@ -12,16 +12,18 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs) -> None:
-        if self.coach and not self.coach.type == User.Types.COACH:
-            raise ValueError(
-                "Only coach can manage a team"
-            )
-        super().save(*args, **kwargs)
-
     def get_average_rating(self):
         average = 0
         if self.team_participation:
             average = self.team_wins / self.team_participation
         return average if average is not None else 0.0
+
+    def increase_participation(self):
+        self.team_participation += 1
+        self.save()
+
+    def increase_wins(self):
+        self.team_wins += 1
+        self.save()
+
 
