@@ -94,9 +94,16 @@ WSGI_APPLICATION = "matgame.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    "default": {
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": os.environ.get("DJANGO_DB_NAME", "matgame"),
             "USER": os.environ.get("DJANGO_DB_USER", "dboperator"),
@@ -108,7 +115,7 @@ DATABASES = {
             "CONN_HEALTH_CHECKS": True,
             "CONN_MAX_AGE": 60 * 30,  # 30 minutes
         }
-}
+    }
 
 
 # Password validation

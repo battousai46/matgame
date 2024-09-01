@@ -54,6 +54,14 @@ class PlayerDetails(models.Model):
     def __str__(self):
         return self.user.username
 
+    def increase_participation(self):
+        self.individual_participation += 1
+        self.save()
+
+    def increase_wins(self):
+        self.individual_wins += 1
+        self.save()
+
 
 class Player(User):
     base_type = User.Types.PLAYER
