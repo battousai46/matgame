@@ -5,9 +5,12 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
+
 class User(AbstractUser):
     pkid = models.BigAutoField(primary_key=True, editable=False)
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    name = models.CharField(_("Name of User"), blank=True, max_length=255)
+
     class Types(models.TextChoices):
         PLAYER = "PLAYER", "Player"
         COACH = "COACH", "Coach"
@@ -18,8 +21,6 @@ class User(AbstractUser):
     type = models.CharField(
         _("Type"), max_length=50, choices=Types.choices, default=base_type
     )
-
-    name = models.CharField(_("Name of User"), blank=True, max_length=255)
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
@@ -46,14 +47,17 @@ class LeagueAdminManager(models.Manager):
 
 class PlayerDetails(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    total_participation = models.IntegerField(default=0)
-    total_wins = models.IntegerField(default=0)
+    individual_participation = models.IntegerField(default=0)
+    individual_wins = models.IntegerField(default=0)
+    # TODO active players of a team limit is 5
+    team = models.ForeignKey("teams.Team", on_delete=models.CASCADE, related_name="players", blank=True, null=True)
+    def __str__(self):
+        return self.user.username
 
 
 class Player(User):
     base_type = User.Types.PLAYER
     objects = PlayerManager()
-
     @property
     def details(self):
         return self.playerdetails

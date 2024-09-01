@@ -25,11 +25,16 @@ urlpatterns = [
     # User management
     path(
         "users/",
-        include("users.urls", namespace="users"),
+        include("users.urls.users", namespace="users"),
     ),
+
+    # TODO to integrate social auth
     path("accounts/", include("allauth.urls")),
 
-    #openapi
+    # version 1
+    path("api/v1/", include("matgame.urls.v1")),
+
+    # openapi
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     path(

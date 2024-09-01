@@ -15,18 +15,19 @@ class UserAdmin(BaseUserAdmin):
     list_display = [
         "pkid",
         "id",
+        "type",
         "email",
         "first_name",
         "last_name",
         "username",
         "is_superuser",
     ]
-    list_display_links = ["pkid", "id", "email", "username"]
+    list_display_links = ["pkid", "id", "type", "email", "username"]
     search_fields = ["email", "first_name", "last_name"]
     ordering = ["pkid"]
     fieldsets = (
         (_("Login Credentials"), {"fields": ("email", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "username")}),
+        (_("Personal info"), {"fields": ("type", "first_name", "last_name", "username")}),
         (
             _("Permissions and Groups"),
             {
@@ -47,6 +48,7 @@ class UserAdmin(BaseUserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
+                    "type",
                     "username",
                     "email",
                     "first_name",
