@@ -39,6 +39,12 @@ TODO:
 Implementation of Front End, preferrably NextJS in React or any convenience.
 Enhance with all necessary API.
 
+```
+schema:
+```
+![schema game models](https://github.com/user-attachments/assets/34acf5f1-d259-4605-af98-3faf9383594a)
+
+
 #### local development 
 
 ```bash
