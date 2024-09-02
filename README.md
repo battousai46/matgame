@@ -1,49 +1,47 @@
-# POC django backend basic auth, simple jwt, proxy model
+#### POC: Management system for simple game of elimination rounds
 
+
+```
+ techstak: django
+ * REST api versioned for stateless resource management
+ * jwt as auth, proxy model for custom user types.
  * poetry is used for library version management in poetry.lock file
  * direnv to load secrets from envrc
- * docker for local development purpose
+ * docker for local development purpose1q
  * black, isort, flake8 for linting in pre-commit hook
  * drf_spectacular swagger api https://{host}/api/docs/#tag/users
  * postgres:14.7 for relational database
-
-
-REST api to service to sevice / FE BE communication for managing a game
-in this POC, the game consist of league with log(2^N) elimination rounds
-There can be any power of 2 Teams, i.e: 16 Teams
-in each round 2 teams can participate, and one moves forward, thus there are ln(N) rounds
-
-There can be three types of users: League Admin, Coach (can manage only one team), Player.
-
-Users(Player, Coach, LeagueAdmin), Teams, Leagues, Games and Rounds are the basic business models.  
  
-
-A team can consist of many players but at a league certain number of players say 5 (basketball) 
-can participate. 
-If A team participates in multiple leagues, some player may participate in some of the
-leagues. Each individual participation is recorded in player details model. 
-A winning team should keep its participants winning record updated as well, others whom did not participated
-on that league remains usual.
-
-A game represents each elimination round, record of winning and losing team on that round.
-A round represents match count, game and league to rebuild the score board of each league.
-
-Authorization are enforced in custom permission_class, 
-also JWT claims are updated with user type ( player, coach, league admin ) for facilitating stateless service to service communication.
-
-Management scripts i.e: init_game  is written for end2end integration and demo in users app.
-
-Migration history represents the unfolding relations and business logic of models.
+ containerize in docker for local dev
  
- 
-Next Phase: Tests cases are must to be written, implement full functionality exposing necessary api with authorization
-representing init_game management script.
-Implementation of Front End, preferrably NextJS in React or any convenience.  
+```
 
-#### build virtualenv, run app and rds in docker, run migration, initate management script
+
+
+The game consist of leagues, event of log(2^N) elimination rounds
+There can be N teams, where N is power of 2.
+i.e: A league of 16 Teams, can have ln(16) = 2^4 = 4 rounds
+In each round, each pair of teams contends and one wins eliminating the other.
+
+In this business model there are three types of users: League Admin, Coach (can manage only one team), and Player.
+
+A team may have multiple players but at each game a fixed number of palyer can participate.
+Individual participants have player statistics like winning and number of participation count.
+
+```
+Management scripts is written for end2end integration and demo
+
+script location: i.e: users/management/commands/init_game
+
+python manage.py init_game 
+```
+TODO:
+Implementation of Front End, preferrably NextJS in React or any convenience.
+Enhance with all necessary API.
+
+#### local development 
 
 ```bash
-setup test environment config
 
 DJANGO_SETTINGS_MODULE=matgame.settings;DJANGO_DEBUG=TRUE
 ```
