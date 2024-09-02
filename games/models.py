@@ -11,6 +11,7 @@ participation count for both team increases
 
 from teams.models import Team
 
+
 class Game(models.Model):
     """
       Game represents an elimination round between two team
@@ -20,21 +21,17 @@ class Game(models.Model):
     winning_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='winning_team')
 
     def update_individual_player_score(self):
-        # this bulk update should be asyncronous, can be awaited as courotine or defered by celery tasks
+        # this bulk update should be asynchronous, can be awaited as coroutine or deferred by celery tasks
         losing_players = self.losing_team.players.all()
         # increase losing team player participation
         for ith_player in losing_players:
             ith_player.increase_participation()
 
-        # this block is partially repetitive as above, can refactored to same method
+        # this block is partially repetitive as above, can refactor to single method
         winning_players = self.winning_team.players.all()
         for ith_player in winning_players:
             ith_player.increase_participation()
             ith_player.increase_wins()
-
-
-
-
 
     def save(self, *args, **kwargs) -> None:
         # update winning score and losing team participation count

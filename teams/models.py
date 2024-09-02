@@ -12,7 +12,7 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-    def get_average_rating(self):
+    def get_average_score(self):
         average = 0
         if self.team_participation:
             average = self.team_wins / self.team_participation

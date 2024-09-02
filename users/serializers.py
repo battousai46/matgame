@@ -68,6 +68,7 @@ class PlayerDetailsSerializer(serializers.ModelSerializer):
 
 class MatGameTokenObtainSerializer(TokenObtainSerializer):
     token_class = RefreshToken
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
