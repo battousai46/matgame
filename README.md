@@ -7,7 +7,7 @@
  * jwt as auth, proxy model for custom user types.
  * poetry is used for library version management in poetry.lock file
  * direnv to load secrets from envrc
- * docker for local development purpose1q
+ * docker for local development purpose
  * black, isort, flake8 for linting in pre-commit hook
  * drf_spectacular swagger api https://{host}/api/docs/#tag/users
  * postgres:14.7 for relational database
